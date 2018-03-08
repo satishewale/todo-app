@@ -1,20 +1,29 @@
 import React, { Component } from "react";
 
 class Header extends Component {
-  
-  // constructor(props) {
-  //   super(props);
-  // }
 
+  constructor(){
+    super();
+    this.state = {
+      textVal : ''
+    };
+  }
+
+  _handleOnChange(event) {
+    this.setState({
+      textVal : event.target.value
+    });
+  }
   _handleKeyPress(event) {
-    if(event.key === "Enter"){
-      console.log("Enter", this.props);
+    if(event.key === "Enter" && event.target.value) {
       this.props.addToDo(event.target.value);
+      this.setState({
+        textVal : ''
+      });
     }
   }
 
   render() {
-    console.log("---", this.props);
     return (
       <div className="header">
         <input
@@ -22,6 +31,8 @@ class Header extends Component {
           className="new-todo form-control"
           placeholder="What needs to be done?"
           onKeyPress={this._handleKeyPress.bind(this)}
+          onChange={this._handleOnChange.bind(this)}
+          value={this.state.textVal}
         />
       </div>
     );
