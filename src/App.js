@@ -1,5 +1,6 @@
 import React  from "react";
 import Header from "./components/header";
+import "./App.css";
 
 export default class App extends React.Component {
   constructor() {
@@ -31,7 +32,7 @@ export default class App extends React.Component {
   
   onCheckBoxChange(index){
     let dummyTodos = [...this.state.listOfTodos];
-    dummyTodos[index].completed = true;
+    dummyTodos[index].completed = !dummyTodos[index].completed;
 
     this.setState({
       listOfTodos : dummyTodos
@@ -54,6 +55,15 @@ export default class App extends React.Component {
       selectedFilter : 'all'
     });
   }
+  
+  removeToDo(index){
+    let dummyTodos = [...this.state.listOfTodos];
+    dummyTodos.splice(index,1);
+
+    this.setState({
+      listOfTodos : dummyTodos
+    });
+  }
 
   render() {
     
@@ -65,6 +75,7 @@ export default class App extends React.Component {
           <li key={index} className={`list-group-item ${option.completed ? 'disabled' : ''}`}>
             <input type = "checkbox" checked={option.completed} onChange={() => this.onCheckBoxChange(index)}/>
             {option.name}
+            <button type="button" onClick={()=>this.removeToDo(index)} class="btn btn-danger btn-sm">Delete</button>
           </li>
         ));
       }
